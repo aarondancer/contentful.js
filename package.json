@@ -16,11 +16,11 @@
     "clean": "rimraf dist && rimraf coverage",
     "build": "npm run clean && npm run build:ci",
     "build:ci": "npm run vendor:version && npm run build:standalone",
-    "build:standalone": "BABEL_ENV=webpack webpack && BABEL_ENV=webpack NODE_ENV=production webpack -p",
-    "build:standalone:log": "BABEL_ENV=webpack npm run build && BABEL_ENV=webpack NODE_ENV=production webpack -p --json --profile > webpack-build-log.json",
-    "docs:build": "esdoc -c esdoc.json",
+    "build:standalone": "BABEL_ENV=webpack webpack && BABEL_ENV=webpack webpack -p --output-filename contentful.min.js",
+    "build:standalone:log": "BABEL_ENV=webpack npm run build && webpack -p --json --profile --output-filename contentful.min.js > webpack-build-log.json",
+    "docs:build": "jsdoc -c jsdoc.json",
     "docs:dev": "npm run build && npm run docs:build",
-    "docs:watch": "watchy -w lib npm run docs:dev",
+    "docs:watch": "nodemon --exec npm run docs:dev -w lib",
     "docs:publish": "npm run docs:build && ./node_modules/contentful-sdk-jsdoc/bin/publish-docs.sh contentful.js contentful",
     "lint": "eslint lib test",
     "pretest": "npm run lint",
@@ -48,17 +48,18 @@
   },
   "types": "./index.d.ts",
   "files": [
+    "index.js",
     "version.js",
     "index.d.ts",
     "dist",
     "tonic-example.js"
   ],
   "dependencies": {
-    "json-stringify-safe": "^5.0.1",
-    "lodash": "^4.17.4",
     "axios": "~0.15.3",
     "contentful-sdk-core": "^3.8.0",
-    "es6-promise": "^4.0.5"
+    "es6-promise": "^4.0.5",
+    "json-stringify-safe": "^5.0.1",
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "babel-cli": "^6.7.5",
@@ -78,7 +79,6 @@
     "contentful-sdk-jsdoc": "^2.0.0",
     "coveralls": "^2.11.9",
     "cz-conventional-changelog": "^1.1.6",
-    "esdoc": "^0.5.2",
     "eslint": "^3.16.0",
     "eslint-config-standard": "^6.2.1",
     "eslint-plugin-promise": "^3.4.2",
@@ -96,6 +96,7 @@
     "karma-webpack": "^2.0.2",
     "lodash-webpack-plugin": "^0.11.2",
     "mkdirp": "^0.5.1",
+    "nodemon": "^1.11.0",
     "require-all": "^2.2.0",
     "rimraf": "^2.6.0",
     "semantic-release": "^6.3.2",
