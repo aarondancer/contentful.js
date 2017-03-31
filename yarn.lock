@@ -1324,9 +1324,9 @@ contentful-sdk-core@^3.8.0:
     npmlog "^4.0.2"
     qs "^6.1.0"
 
-contentful-sdk-jsdoc@^1.2.2:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/contentful-sdk-jsdoc/-/contentful-sdk-jsdoc-1.2.3.tgz#6b93b9cb5fa07050ed8bf56d40c68e1dfa44d03c"
+contentful-sdk-jsdoc@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/contentful-sdk-jsdoc/-/contentful-sdk-jsdoc-2.1.0.tgz#08079209dbfd94f345cf490b64449b5e1374c3ec"
 
 conventional-changelog@0.0.17:
   version "0.0.17"
