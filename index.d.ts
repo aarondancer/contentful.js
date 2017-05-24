@@ -1,13 +1,26 @@
 // Type definitions for contentful
 // Definitions by: Miika Hänninen <https://github.com/googol>
 
+export interface AxiosProxyConfig {
+    host: string;
+    port?: number;
+    auth?: {
+        username: string;
+        password: string;
+    };
+}
+
 export interface CreateClientParams {
     space: string;
     accessToken: string;
     insecure?: boolean;
     host?: string;
-    agent?: any;
+    httpAgent?: any;
+    httpsAgent?: any;
+    proxy?: AxiosProxyConfig;
     headers?: any;
+    application?: string;
+    integration?: string;
     resolveLinks?: boolean;
 }
 
@@ -64,7 +77,7 @@ export interface ContentType {
     name: string;
     description: string;
     displayField: string;
-    Array: string;
+    fields: Array<Field>;
     toPlainObject(): ContentType;
 }
 
@@ -102,6 +115,17 @@ export interface ContentTypeLink {
     type: 'Link';
     linkType: 'ContentType';
     id: string;
+}
+
+export interface Field {
+    disabled: boolean;
+    id: string;
+    linkType?: string;
+    localized: boolean;
+    name: string;
+    omitted: boolean;
+    required: boolean;
+    type: string;
 }
 
 export function createClient(params: CreateClientParams): ContentfulClientApi;

@@ -4,6 +4,8 @@
   "version": "4.1.0",
   "homepage": "https://www.contentful.com/developers/documentation/content-delivery-api/",
   "main": "./dist/contentful.node.js",
+  "module": "./dist/es6-modules/contentful.js",
+  "jsnext:main": "./dist/es6-modules/contentful.js",
   "browser": "./dist/contentful.js",
   "repository": {
     "type": "git",
@@ -15,10 +17,11 @@
   "scripts": {
     "clean": "rimraf dist && rimraf coverage",
     "build": "npm run clean && npm run build:ci",
-    "build:ci": "npm run vendor:version && npm run build:standalone",
-    "build:standalone": "BABEL_ENV=webpack webpack && BABEL_ENV=webpack webpack -p --output-filename contentful.min.js",
-    "build:standalone:log": "BABEL_ENV=webpack npm run build && webpack -p --json --profile --output-filename contentful.min.js > webpack-build-log.json",
     "docs:build": "jsdoc -c jsdoc.json",
+    "build:ci": "npm run vendor:version && npm run build:standalone && npm run build:modules",
+    "build:standalone": "BABEL_ENV=webpack webpack && BABEL_ENV=webpack NODE_ENV=production webpack ",
+    "build:standalone:log": "BABEL_ENV=webpack npm run build && BABEL_ENV=webpack NODE_ENV=production webpack --json --profile > webpack-build-log.json",
+    "build:modules": "BABEL_ENV=webpack babel lib -d dist/es6-modules",
     "docs:dev": "npm run build && npm run docs:build",
     "docs:watch": "nodemon --exec npm run docs:dev -w lib",
     "docs:publish": "npm run docs:build && ./node_modules/contentful-sdk-jsdoc/bin/publish-docs.sh contentful.js contentful",
@@ -56,7 +59,7 @@
   ],
   "dependencies": {
     "axios": "~0.15.3",
-    "contentful-sdk-core": "^3.8.0",
+    "contentful-sdk-core": "^3.10.1",
     "es6-promise": "^4.0.5",
     "json-stringify-safe": "^5.0.1",
     "lodash": "^4.17.4"
